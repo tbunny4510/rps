@@ -8,9 +8,68 @@ const choiceWindow = document.querySelector('.choiceWindow');
 const whoWins = document.querySelector('.whoWins');
 const btns = document.querySelectorAll('button');
 
+let tie = () => {
+    whoWins.textContent = "It's a tie!";
+}
+
+let win = () => {
+    whoWins.textContent = "You won!";
+    playerScore++;
+}
+
+let lose = () => {
+    whoWins.textContent = "Computer won!";
+    computerScore++;
+}
+
+let rock = (playerSelection, computerSelection) =>
+    (computerSelection === "scissors") ? win() :
+        (computerSelection === "paper") ? lose() : tie();
+
+let paper = (playerSelection, computerSelection) =>
+    (computerSelection === "rock") ? win() :
+        (computerSelection === "scissors") ? lose() : tie();
+
+let scissors = (playerSelection, computerSelection) =>
+    (computerSelection === "paper") ? win() :
+        (computerSelection === "rock") ? lose() : tie();
+
+function computerChoice(num) {
+    switch(num) {
+        case 0: return 'rock';
+            break;
+        case 1: return 'paper';
+            break;
+        case 2: return 'scissors';
+    }
+}
+
+let final = (pScore, cScore) => {
+    if(pScore > cScore) {
+        choiceWindow.textContent = "You got to 5 wins first!";
+        whoWins.textContent = "You win!";
+    } else {
+        choiceWindow.textContent = "Computer got to 5 wins first!";
+        whoWins.textContent = "You lose!";
+    }
+}
+
+let playRound = (playerChoice, compChoice) => {
+    (playerChoice === "rock") ? rock(playerChoice, compChoice) :
+        (playerChoice === "paper") ? paper(playerChoice, compChoice) :
+        scissors(playerChoice, compChoice);
+
+    choiceWindow.textContent = `${playerChoice} vs ${compChoice}`;
+    scorePlayer.textContent = `Player: ${playerScore}`;
+    scoreComputer.textContent = `Computer: ${computerScore}`;
+
+    if(playerScore === 5 || computerScore === 5)
+        final(playerScore, computerScore);
+};
+
 btns.forEach((button) => {
     button.addEventListener('click', () => {
-        playRound(button.id);
+        playRound(button.id, computerChoice(randomizer()));
     });
 });
 
