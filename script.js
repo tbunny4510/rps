@@ -1,14 +1,20 @@
 let playerScore = 0;
 let computerScore = 0;
+let randomizer = () => Math.floor(Math.random() * 3);
 
 const scorePlayer = document.querySelector('.playerScore');
 const scoreComputer = document.querySelector('.computerScore');
-const rockButton = document.querySelector('.rock');
-const paperButton = document.querySelector('.paper');
-const scissorButton = document.querySelector('.scissors');
 const choiceWindow = document.querySelector('.choiceWindow');
 const whoWins = document.querySelector('.whoWins');
+const btns = document.querySelectorAll('button');
 
+btns.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id);
+    });
+});
+
+/*
 function updateScore(whoWins) {
     if(whoWins === "Player Wins") {
         playerScore++;
@@ -29,3 +35,4 @@ function reset() {
 rockButton.addEventListener('click', () => updateScore("Player Wins"));
 paperButton.addEventListener('click', () => updateScore("Player Loses"));
 scissorButton.addEventListener('click', () => reset());
+*/
